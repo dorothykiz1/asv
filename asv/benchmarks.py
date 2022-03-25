@@ -265,7 +265,7 @@ class Benchmarks(dict):
             # Not a Python package directory
             if require_init_py:
                 raise util.UserError(
-                    "No __init__.py file in '{0}'".format(root))
+                    f"No __init__.py file in '{root}'")
             else:
                 return
 
@@ -285,8 +285,8 @@ class Benchmarks(dict):
             if os.path.isdir(path):
                 if dirname in found:
                     raise util.UserError(
-                        "Found a directory and python file with same name in "
-                        "benchmark tree: '{0}'".format(path))
+                        f"Found a directory and python file with same name in "
+                        f"benchmark tree: '{path}'")
                 cls.check_tree(path, require_init_py=False)
 
     @classmethod
@@ -326,7 +326,7 @@ class Benchmarks(dict):
         try:
             path = cls.get_benchmark_file_path(conf.results_dir)
             if not os.path.isfile(path):
-                raise util.UserError("Benchmark list file {} missing!".format(path))
+                raise util.UserError(f"Benchmark list file {path} missing!")
             d = util.load_json(path, api_version=cls.api_version)
             benchmarks = d.values()
             return cls(conf, benchmarks, regex=regex)
@@ -334,5 +334,5 @@ class Benchmarks(dict):
             if "asv update" in str(err):
                 # Don't give conflicting instructions
                 raise
-            raise util.UserError("{}\nUse `asv run --bench just-discover` to "
-                                 "regenerate benchmarks.json".format(str(err)))
+            raise util.UserError(f"{str(err)}\nUse `asv run --bench just-discover` to "
+                                 "regenerate benchmarks.json")
